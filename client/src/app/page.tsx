@@ -5,7 +5,9 @@ import { EventType } from "@/types/event";
 
 import { ImageCard } from "./components/card/ImageCard";
 
-const EVENTS_QUERY = `*[_type == "event" && defined(slug.current)]{_id, name, slug, date, image}|order(date desc)`;
+const EVENTS_QUERY = `*[_type == "event" && defined(slug.current)]{
+  _id, name, slug, date, image, grams, rating
+}|order(date desc)`;
 
 // Display Sanity content on the page
 export default async function IndexPage() {

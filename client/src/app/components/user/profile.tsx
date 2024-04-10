@@ -13,8 +13,11 @@ export default async function ProfileServer() {
       p="2"
       align="center"
       border="1px"
-      borderColor="gray.200"
-      bg="gray.100"
+      borderTop="0"
+      borderLeft="0"
+      borderRight="0"
+      _dark={{ borderColor: "gray.600" }}
+      _light={{ borderColor: "gray.200" }}
       h={58}
     >
       <a href="/">logo</a>

@@ -125,6 +125,16 @@ export const eventType = defineType({
       ],
       group: ['editorial'],
     }),
+    defineField({
+      name: 'rating',
+      type: 'number',
+      group: ['editorial'],
+      validation: (rule) => [
+        rule.min(0).error('Rating should be a positive number'),
+        rule.max(5).error('Rating should be between 0 and 5'),
+        rule.integer().error('Only whole numbers allowed'),
+      ],
+    }),
   ],
   preview: {
     select: {

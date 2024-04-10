@@ -11,4 +11,6 @@ export type EventType = {
       _ref: string;
     };
   };
+  grams: number;
+  rating: number;
 };
