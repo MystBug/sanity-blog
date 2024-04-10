@@ -8,6 +8,7 @@ import Image from "next/image";
 
 import { getMonth } from "@/utils/dates/getMonth";
 import { urlFor } from "@/utils/urlFor";
+import { Grid, GridItem, Heading, Text, Link } from "@chakra-ui/react";
 
 const EVENT_QUERY = `*[
     _type == "event" &&
@@ -44,97 +45,76 @@ export default async function EventPage({ params }: EventPageType) {
     date
   ).getFullYear()}`;
   const eventTime = new Date(date).toLocaleTimeString();
-  const doorsOpenTime = new Date(
-    new Date(date).getTime() + doorsOpen * 60000
-  ).toLocaleTimeString();
 
   return (
-    <main className="content">
-      <div>
-        <div>
-          {(eventImageUrl || artistImageUrl) && (
-            <Image
-              priority
-              alt={name || headline?.name}
-              height="310"
-              src={eventImageUrl || artistImageUrl || ""}
-              width="550"
-            />
-          )}
-          <div>
-            <div>
-              {name && <h1>{name}</h1>}
-              {headline?.name && (
-                <dl>
-                  <div>
-                    <dt>Artiest</dt>
-                    <dd>Artiest</dd>
-                  </div>
-                  <div>
-                    <dt>
-                      {headline?.name} {grams ? `- ${grams} gram` : ""}
-                    </dt>
-                  </div>
-                </dl>
-              )}
-              <dl>
-                <div>
-                  <dt>Datum</dt>
-                  <dd>Datum</dd>
-                </div>
-                <div>
-                  {exactDate ? (
-                    <>
-                      {eventDate && <dt>{eventDate}</dt>}
-                      {eventTime && <dt>{eventTime}</dt>}
-                    </>
-                  ) : (
-                    <>{eventDateMonth && <dt>{eventDateMonth}</dt>}</>
-                  )}
-                </div>
-              </dl>
-              <dl>
-                <div>
-                  <dt>Venue</dt>
-                  <dd>Venue</dd>
-                </div>
-                <div>
-                  <dt>{venue.name}</dt>
-                  {venue.city && venue.country && (
-                    <dt>
-                      {venue.city}, {venue.country}
-                    </dt>
-                  )}
-                </div>
-              </dl>
-            </div>
-          </div>
-        </div>
-        {details && details.length > 0 && (
-          <div>
-            <PortableText
-              value={details}
-              components={{
-                types: {
-                  image: ({ value }) => (
-                    <Image
-                      src={urlFor(value.asset._ref)!.url()}
-                      alt={value.alt}
-                      width={getImageDimensions(value.asset._ref).width}
-                      height={getImageDimensions(value.asset._ref).height}
-                    />
-                  ),
-                },
-                marks: {
-                  link: ({ children, value }) => (
-                    <a href={value.href}>{children}</a>
-                  ),
-                },
-              }}
-            />
-          </div>
+    <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+      <GridItem colSpan={2}>
+        {(eventImageUrl || artistImageUrl) && (
+          <Image
+            priority
+            alt={name || headline?.name}
+            height="310"
+            src={eventImageUrl || artistImageUrl || ""}
+            width="550"
+          />
         )}
-      </div>
-    </main>
+      </GridItem>
+      <GridItem colSpan={2}>
+        {name && (
+          <Heading as="h1" size="4xl" py={8}>
+            {name}
+          </Heading>
+        )}
+        <Grid templateColumns="repeat(4, 1fr)" gap={1}>
+          {headline?.name && (
+            <>
+              <GridItem colSpan={1}>Artiest</GridItem>
+              <GridItem colSpan={3}>
+                {headline?.name} {grams ? `- ${grams} gram` : ""}
+              </GridItem>
+            </>
+          )}
+          <GridItem colSpan={1}>Datum</GridItem>
+          <GridItem colSpan={3}>
+            {exactDate ? (
+              <>
+                {eventDate && <dt>{eventDate}</dt>}
+                {eventTime && <dt>{eventTime}</dt>}
+              </>
+            ) : (
+              <>{eventDateMonth && <dt>{eventDateMonth}</dt>}</>
+            )}
+          </GridItem>
+          <GridItem colSpan={1}>Venue</GridItem>
+          <GridItem colSpan={3}>{venue.name}</GridItem>
+        </Grid>
+      </GridItem>
+      {details && details.length > 0 && (
+        <GridItem colSpan={2} colStart={2} className="content">
+          <PortableText
+            value={details}
+            components={{
+              types: {
+                image: ({ value }) => (
+                  <Image
+                    src={urlFor(value.asset._ref)!.url()}
+                    alt={value.alt}
+                    width={getImageDimensions(value.asset._ref).width}
+                    height={getImageDimensions(value.asset._ref).height}
+                  />
+                ),
+              },
+              marks: {
+                link: ({ children, value }) => (
+                  <Link color="orange" href={value.href}>
+                    {children}
+                  </Link>
+                ),
+              },
+            }}
+          />
+        </GridItem>
+      )}
+    </Grid>
   );
 }
