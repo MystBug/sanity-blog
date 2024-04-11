@@ -14,7 +14,7 @@ export default async function IndexPage() {
   const events = await client.fetch<EventType[]>(EVENTS_QUERY);
 
   return (
-    <Grid p={8} h="200px" templateColumns="repeat(4, 1fr)" gap={4}>
+    <Grid p={8} templateColumns="repeat(4, 1fr)" gap={4}>
       {events.map((event) => (
         <GridItem key={event._id}>
           <ImageCard item={event} />

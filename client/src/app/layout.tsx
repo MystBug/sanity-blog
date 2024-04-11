@@ -20,10 +20,10 @@ export default async function RootLayout({
 }>) {
   const { user } = (await getSession()) || {};
   return (
-    <html lang="en">
+    <html lang="en" data-theme="dark" style={{ colorScheme: "dark" }}>
       <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-      <body>
+      <body className="chakra-ui-dark">
         <Providers>
           <Lead />
 

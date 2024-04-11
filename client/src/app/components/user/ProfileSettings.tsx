@@ -9,7 +9,6 @@ import {
   MenuItem,
   MenuList,
   useColorMode,
-  useColorModeValue,
 } from "@chakra-ui/react";
 
 import {
