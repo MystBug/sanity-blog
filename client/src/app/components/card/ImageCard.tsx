@@ -31,6 +31,7 @@ export const ImageCard = ({ item }: ImageCardProps) => {
     grams: item.grams,
     date: new Date(item.date).toDateString(),
     rating: item.rating,
+    // TODO: Maybe add "headline" and "venue" too, at some point
   };
 
   return (
