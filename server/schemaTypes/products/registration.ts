@@ -8,8 +8,7 @@ export const productRegistrationType = defineType({
   icon: ColorWheelIcon,
   fields: [
     defineField({
-      name: 'strainName',
-      title: 'Strain name',
+      name: 'name',
       type: 'string',
     }),
     defineField({
@@ -26,77 +25,61 @@ export const productRegistrationType = defineType({
       of: [{type: 'string'}],
     }),
     defineField({
-      name: 'flushGeneration',
-      title: 'Flush generation',
+      name: 'generation',
       type: 'number',
     }),
     defineField({
-      title: 'Grow Registration',
-      name: 'growRegistration',
+      name: 'registration',
       type: 'array',
       of: [
         {
           type: 'object',
           preview: {
             select: {
-              dateGrowStart: 'dateGrowStart',
+              dateGrowStart: 'dateStart',
             },
             prepare(selection) {
               return {
-                title: `Grow: ${selection.dateGrowStart}`,
+                title: `Start Date: ${selection.dateGrowStart}`,
               }
             },
           },
           fields: [
             {
-              title: 'Date grow start',
-              name: 'dateGrowStart',
+              title: 'Date start',
+              name: 'dateStart',
               type: 'date',
             },
             {
-              title: 'Flush',
-              name: 'flush',
+              name: 'round',
               type: 'array',
               of: [
                 {
                   type: 'object',
                   preview: {
                     select: {
-                      dateFlushPicked: 'dateFlushPicked',
-                      gramsWet: 'gramsWet',
-                      gramsDry: 'gramsDry',
-                      numberOfSporePrints: 'numberOfSporePrints',
+                      datePicked: 'datePicked',
+                      wet: 'wet',
+                      dry: 'dry',
+                      prints: 'prints',
                     },
                     prepare(selection) {
                       return {
-                        title: `Flush: ${selection.dateFlushPicked}`,
-                        subtitle: `Wet: ${selection.gramsWet}g,
-                        Dry: ${selection.gramsDry}g,
-                        Prints: ${selection.numberOfSporePrints}`,
+                        title: `Flush: ${selection.datePicked}`,
+                        subtitle: `Wet: ${selection.wet}g,
+                        Dry: ${selection.dry}g,
+                        Prints: ${selection.prints}`,
                       }
                     },
                   },
                   fields: [
                     {
-                      title: 'Date flush picked',
-                      name: 'dateFlushPicked',
+                      title: 'Date picked',
+                      name: 'datePicked',
                       type: 'date',
                     },
                     {
-                      title: 'Grams wet',
-                      name: 'gramsWet',
-                      type: 'number',
-                      validation: (Rule) => Rule.min(0),
-                    },
-                    {
-                      title: 'Grams dry',
-                      name: 'gramsDry',
-                      type: 'number',
-                      validation: (Rule) => Rule.min(0),
-                    },
-                    {
-                      title: 'Number of spore prints',
-                      name: 'numberOfSporePrints',
+                      name: 'weight',
                       type: 'number',
                       validation: (Rule) => Rule.min(0),
                     },
@@ -115,64 +98,21 @@ export const productRegistrationType = defineType({
       ],
     }),
     defineField({
-      title: 'Features list',
-      type: 'object',
+      type: 'array',
       name: 'featuresList',
-      fieldsets: [
+      of: [
         {
-          name: 'visual',
-          title: 'Visual',
-          options: {collapsible: true, collapsed: true},
-        },
-        {name: 'creative', title: 'Creative', options: {collapsible: true, collapsed: true}},
-        {
-          name: 'philosophical',
-          title: 'Philosophical',
-          options: {collapsible: true, collapsed: true},
-        },
-        {name: 'intensive', title: 'Intensive', options: {collapsible: true, collapsed: true}},
-        {name: 'overall', title: 'Overall', options: {collapsible: true, collapsed: true}},
-      ],
-      fields: [
-        {
-          title: 'Value',
-          name: 'visual',
-          type: 'number',
-          description: 'Number between 0 and 10',
-          validation: (Rule) => Rule.min(0).max(10),
-          fieldset: 'visual',
-        },
-        {
-          title: 'Value',
-          name: 'creative',
-          type: 'number',
-          description: 'Number between 0 and 10',
-          validation: (Rule) => Rule.min(0).max(10),
-          fieldset: 'creative',
-        },
-        {
-          title: 'Value',
-          name: 'philosophical',
-          type: 'number',
-          description: 'Number between 0 and 10',
-          validation: (Rule) => Rule.min(0).max(10),
-          fieldset: 'philosophical',
-        },
-        {
-          title: 'Value',
-          name: 'intensive',
-          type: 'number',
-          description: 'Number between 0 and 10',
-          validation: (Rule) => Rule.min(0).max(10),
-          fieldset: 'intensive',
-        },
-        {
-          title: 'Value',
-          name: 'overall',
-          type: 'number',
-          description: 'Number between 0 and 10',
-          validation: (Rule) => Rule.min(0).max(10),
-          fieldset: 'overall',
+          type: 'object',
+          fields: [
+            {
+              name: 'feature',
+              type: 'string',
+            },
+            {
+              name: 'value',
+              type: 'string',
+            },
+          ],
         },
       ],
     }),
